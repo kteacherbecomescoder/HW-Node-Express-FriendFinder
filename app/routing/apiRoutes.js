@@ -1,57 +1,43 @@
-var friends = require('../data/friends.js');
+var friendsData = require("../data/friends.js");
+
 
 module.exports = function (app) {
-    app.get('/api/friends', function (req, res) {
-        res.json(friends);
+    app.get("/api/friends", function (req, res) {
+        res.json(friendsData);
     });
 
-    app.post('/api/friends', function (req, res) {
-        var newFriend = req.body;
-        var bestMatch = {};
 
-        for (var i = 0; i < newFriend.scores.length; i++) {
-            if (newFriend.scores[i] == "1 (Strongly Disagree)") {
-                newFriend.scores[i] = 1;
-            } else if (newFriend.scores[i] == "5 (Strongly Agree)") {
-                newFriend.scores[i] = 5;
-            } else {
-                newFriend.scores[i] = parseInt(newFriend.scores[i]);
+    app.post("/api/friends", function (req, res) {
+        friendsData.push(req.body);
+
+        var diffScores = [];
+        var lastIndex = friendsData.length - 1;
+        var arr1 = friendsData[lastIndex].scores
+        for (i = 0; i < friendsData.length - 1; i++) {
+            var arr2 = friendsData[i].scores
+            var totalScore = 0;
+            for (j = 0; j < arr1.length; j++) {
+                var quesScore = Math.abs(parseInt(arr1[j]) - parseInt(arr2[j]));
+                totalScore += quesScore;
             }
+            diffScores.push(totalScore)
         }
 
 
-        var bestMatchIndex = 0;
-        var maxDifference = 40;
-
-
-        for (var i = 0; i < friends.length; i++) {
-            var totalDifference = 0;
-
-            for (var index = 0; index < friends[i].scores.length; index++) {
-                var differenceOneScore = Math.abs(friends[i].scores[index] - newFriend.scores[index]);
-                totalDifference += differenceOneScore;
-
-            }
-
-
-
-            if (totalDifference < maxDifference) {
-                bestMatchIndex = i;
-                maxDifference = totalDifference;
+        var lowestScore = 40;
+        for (i = 0; i < diffScores.length; i++) {
+            if (diffScores[i] < lowestScore) {
+                lowestScore = diffScores[i];
             }
         }
+        var lowestScoreIndex = diffScores.indexOf(lowestScore);
+        var bestMatchName = friendsData[lowestScoreIndex].name;
+        var bestMatchPhoto = friendsData[lowestScoreIndex].photo;
+        var bestMatch = {
+            name: bestMatchName,
+            photo: bestMatchPhoto
+        }
 
-
-        bestMatch = friends[bestMatchIndex];
-        friends.push(newFriend);
         res.json(bestMatch);
-
     });
-
-
-
-
-
-
-
 };
