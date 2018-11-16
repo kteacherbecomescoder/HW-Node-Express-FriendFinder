@@ -189,27 +189,7 @@
 
 
   <script type="text/javascript">
-    $(".submit").on("click", function (event) {
-      event.preventDefault();
-      // Here we grab the form elements
-      var newReservation = {
-        Name: $("#reserve-name").val().trim(),
-        Picture: $("#reserve-phone").val().trim(),
-        // Scores: [$(".scores :selected").text()]
-        scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(),
-          $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val(),
-        ]
-      };
-      $.post("/api/friends", newReservation,
-        function (data) {
-          $("#matchName").text(data.name);
-          $('#matchImg').attr("src", data.photo);
-          $("#resultsModal").modal('toggle');
-          // Clear the form when submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-        });
-    });
+    
   </script>
 
 </html>
