@@ -3,7 +3,7 @@ An Express- and Node-based application for matching users based on personality. 
 deploying an Express application to Heroku.
 
 ## Getting Started
-To view the site visit 'https://stark-spire-36185.herokuapp.com/'
+- To view the site visit https://stark-spire-36185.herokuapp.com/
 
 ## Prerequisites
 - npm install: express and path.
