@@ -1,6 +1,5 @@
 # HW-Node-Express-FriendFinder
-An Express- and Node-based application for matching users based on personality. This application was my first experience 
-deploying an Express application to Heroku.
+An Express and Node-based application for matching users based on personality. This application was my first experience deploying an Express application to Heroku.
 
 ## Getting Started
 To view the site visit https://stark-spire-36185.herokuapp.com/
